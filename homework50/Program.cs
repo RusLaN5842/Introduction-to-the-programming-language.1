@@ -1,68 +1,88 @@
-﻿// Задача 50: Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого элемента или же указание, что такого элемента нет.
-// Например, задан массив:
-// 1 4 7 2
-// 5 9 2 3
-// 8 4 2 4
-// 17 -> такого числа в массиве нет
+﻿//------------------------ Решение задачи 50 ------------------------------
+// Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и
+// возвращает значение этого элемента или же указание, что такого элемента нет.
+// Заполнить числами Фиббоначи и выделить цветом найденную цифру
+//------------------------------------------------------------------------
 
-Console.WriteLine($"Задача 50: Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого элемента или же указание, что такого элемента нет.");
+// Метод возвращает n-ое число Фиббоначи 
+int getFib(int n)  
+{  
+    if ((n == 0) || (n == 1)) return n;
+    return getFib(n - 1) + getFib(n - 2);  
+} 
 
-Console.Write("\nMассив возьмем из предыдущей задачи (№ 47).\n");
-Console.Write("Введите координаты позиции элемента, разделенных запятой: ");
-
-string? positionElement = Console.ReadLine();
-positionElement = RemovingSpaces(positionElement);
-int[] position = ParserString(positionElement);
-
-if(position[0] <= m 
-&& position[1] <= n 
-&& position[0] >= 0 
-&& position[1] >= 0) 
+// Метод fillArray, который заполняет двумерный массив
+int[,] fillArray(int m, int n)
 {
-  double result = array[position[0]-1, position[1]-1];
-  Console.Write($"Значение элемента: {result}");
-}
-else Console.Write($"такого элемента в массиве нет.");
-
-int[] ParserString(string input)
-{
-  int countNumbers = 1;
-  for (int i = 0; i < input.Length; i++)
-  {
-      if (input[i] == ',')
-          countNumbers++;
-  }
-
-  int[] numbers = new int[countNumbers];
-
-  int numberIndex = 0;
-  for(int i = 0; i < input.Length; i++)
-  {
-    string subString = String.Empty;
-
-    while (input[i] != ',')
+    int[,] outputArray = new int[m, n];
+    int count = 0;
+    
+    for (int i = 0; i < m; i++)
     {
-      subString += input[i].ToString();
-      if (i >= input.Length - 1)
-        break;
-      i++;
+        for (int j = 0; j < n; j++)
+        {
+            outputArray[i, j] = getFib(count);
+            count++;
+        }
     }
-    numbers[numberIndex] = Convert.ToInt32(subString);
-    numberIndex++;
-  }
-
-  return numbers;
+    
+    return outputArray;
 }
 
-string RemovingSpaces (string input)
+// Метод printTwoDimArray, который выводит двумерный массив в консоль
+void printTwoDimArray(int [,] inputArray, int m, int n)
 {
-  string output = String.Empty;
-  for (int i = 0; i < input.Length; i++)
-  {
-    if (input[i] != ' ') 
+    for (int i = 0; i < inputArray.GetLength(0); i++)
     {
-      output += input[i];
+        for (int j = 0; j < inputArray.GetLength(1); j++)
+        {
+            if (i==m && j==n) Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{inputArray[i, j]}\t");
+            Console.ResetColor();
+        }
+        Console.WriteLine();
     }
-  }
-  return output;
+    if (m > inputArray.GetLength(0)-1 || n > inputArray.GetLength(1)-1)
+        Console.WriteLine($"Элемента с позицией [{m}, {n}] нет в массиве"); 
+    else
+        Console.WriteLine($"Элемент с позицией [{m}, {n}] помечен красным цветом");   
+}
+
+// Метод getConsoleData для считывания данных с консоли
+void getConsoleData(out int m, out int n)
+{
+    m = 0;
+    n = 0;
+    
+    Console.WriteLine("Введите позиции элемента двумерного массива m и n");
+    Console.Write("m = ");
+    string? inputFirstLine = Console.ReadLine();
+    Console.Write("n = ");
+    string? inputSecondLine = Console.ReadLine();
+
+    if (inputFirstLine != null && inputSecondLine != null)
+    {
+        m = int.Parse(inputFirstLine);
+        n = int.Parse(inputSecondLine);
+    }
+}
+
+try 
+{
+    //Считываем данные с консоли
+    int m;
+    int n;
+    getConsoleData(out m, out n);
+    
+    // Заполняем массив
+    int[,] outputArray = fillArray(3, 3);
+
+    // Выводим информацию в консоль
+    printTwoDimArray(outputArray, m, n);
+
+}
+catch (Exception e)
+{
+    // Выводим сообщение об ошибке
+    Console.WriteLine($"Что-то здесь не так: {e}");
 }
