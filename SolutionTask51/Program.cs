@@ -43,7 +43,7 @@ ConsoleColor[] col = new ConsoleColor[]{ConsoleColor.Black,ConsoleColor.Blue,Con
                                         ConsoleColor.DarkYellow,ConsoleColor.Gray,ConsoleColor.Green,
                                         ConsoleColor.Magenta,ConsoleColor.Red,ConsoleColor.White,
                                         ConsoleColor.Yellow};
-
+// Мпетод печати массива
 void PrintColorTwoDimArray(int[,] inputArray)
 {
     int i = 0; int j = 0;
