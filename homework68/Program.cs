@@ -1,25 +1,45 @@
-﻿// Задача 68: Напишите программу вычисления функции Аккермана с помощью рекурсии. Даны два неотрицательных числа m и n.
-// m = 2, n = 3 -> A(m,n) = 9
+﻿//-----------------------------------------------------------------------
+//  Напишите программу вычисления функции Аккермана с помощью рекурсии. 
+//  Даны два неотрицательных числа m и n.
+//-----------------------------------------------------------------------
 
-Console.Clear();
-Console.WriteLine($"Задача 68: Напишите программу вычисления функции Аккермана с помощью рекурсии. Даны два неотрицательных числа m и n.");
-int m = InputNumbers("Введите m: ");
-int n = InputNumbers("Введите n: ");
-
-int functionAkkerman = Ack(m, n);
-
-Console.Write($"Функция Аккермана = {functionAkkerman} ");
-
-int Ack(int m, int n)
+try
 {
-  if (m == 0) return n + 1;
-  else if (n == 0) return Ack(m - 1, 1);
-  else return Ack(m - 1, Ack(m, n - 1));
+    //Просим пользователя ввести номер
+    int inputNumberM = ReadNumber("Введите число M: ");
+    int inputNumberN = ReadNumber("Введите число N: ");
+    //Вызоваем метод вычисления и выводим его ответ
+    int result = AkermanFunction(inputNumberM, inputNumberN);
+    //Проверяем результат выведения
+    if (result == -1)
+    {
+        Console.Write($"Решение функции Акермана для введенных чисел не возможно. Произойдет переполнение стека.");
+    }
+    else
+    {
+        Console.Write($"Решение функции Акермана для введенных чисел: {result}");
+    }
 }
 
-int InputNumbers(string input) 
+catch (Exception e)
 {
-  Console.Write(input);
-  int output = Convert.ToInt32(Console.ReadLine());
-  return output;
+    //Выводим ошибку печати
+    Console.WriteLine("Возникло исключение: " + e.Message);
+    Console.WriteLine("Попробуйте запустить программу еще раз.");
+}
+
+//Вычисляем функцию Акермана для заданных аргументов
+int AkermanFunction(int m, int n)
+{
+    if ((m > 4) || ((m > 3) && (n > 0))) return -1;
+    if (m == 0) return n + 1;
+    if (m > 0 && n == 0) return AkermanFunction(m - 1, 1);
+    return AkermanFunction(m - 1, AkermanFunction(m, n - 1));
+}
+
+//Считывает вводимые пользователем данные
+int ReadNumber(string text)
+{
+    Console.Write(text);
+    return int.Parse(Console.ReadLine() ?? "");
 }

@@ -8,22 +8,21 @@ try
     //Просим пользователя ввести номер
     int inputNumberM = ReadNumber("Введите число M: ");
     int inputNumberN = ReadNumber("Введите число N: ");
-    //Проверяем входные данные на наличие 
-    //большего размера и меняем их местами, если первый больше
+    //Проверяем входные числа на наличие большего размера и меняем их местами, если они больше
     if ( inputNumberM > inputNumberN) (inputNumberM, inputNumberN) = (inputNumberN, inputNumberM);
-    //Печатаем вызов
+    //Функция печати
     PrintNumbers(inputNumberM, inputNumberN);
 }
 catch (Exception e)
 {
-    //Печатаем ошибку
+    //Сообщение об ошибке печати
     Console.WriteLine("Возникло исключение: " + e.Message);
     Console.WriteLine("Попробуйте запустить программу еще раз.");
 }
 
 
 
-//Выводим числа
+//Вывод номера из заданного диапозона
 void PrintNumbers(int numM, int numN)
 {
     if (numM != numN)
@@ -37,7 +36,7 @@ void PrintNumbers(int numM, int numN)
     }
 }
 
-//Преобразуем вводимые пользователем данные в число и возвращает его
+//Преобразуем вводимые пользователем данные в число и возвращаем его
 int ReadNumber(string text)
 {
     Console.Write(text);
